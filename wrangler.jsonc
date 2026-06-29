@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "placement-management-system",
+  "name": "management",
   "compatibility_date": "2026-06-29",
   "observability": {
     "enabled": true
