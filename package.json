@@ -7,9 +7,12 @@
     "smoke:cleanup": "node ./scripts/smoke-cleanup.mjs",
     "smoke:docker": "node ./scripts/smoke-docker.mjs",
     "smoke:docker:cleanup": "node ./scripts/smoke-docker-cleanup.mjs",
-    "load:health": "node ./scripts/load-autocannon.mjs"
+    "load:health": "node ./scripts/load-autocannon.mjs",
+    "deploy": "wrangler deploy",
+    "preview": "wrangler dev"
   },
   "devDependencies": {
-    "autocannon": "^8.0.0"
+    "autocannon": "^8.0.0",
+    "wrangler": "^4.105.0"
   }
 }
