@@ -8,8 +8,9 @@
     "smoke:docker": "node ./scripts/smoke-docker.mjs",
     "smoke:docker:cleanup": "node ./scripts/smoke-docker-cleanup.mjs",
     "load:health": "node ./scripts/load-autocannon.mjs",
-    "deploy": "wrangler deploy",
-    "preview": "wrangler dev"
+    "build:frontend": "npm run build --prefix frontend",
+    "pages:deploy": "npm run build:frontend && wrangler pages deploy frontend/dist",
+    "deploy": "npm run pages:deploy"
   },
   "devDependencies": {
     "autocannon": "^8.0.0",

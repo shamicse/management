@@ -5,9 +5,9 @@
   "observability": {
     "enabled": true
   },
-  "assets": {
-    "directory": "frontend"
-  },
+  // This field marks the project as a Cloudflare Pages project.
+  // It should point to the build output directory of your frontend application.
+  "pages_build_output_dir": "frontend/dist",
   "compatibility_flags": [
     "nodejs_compat"
   ]
