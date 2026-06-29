@@ -1,0 +1,15 @@
+{
+  "name": "placement-management-system",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "smoke": "node ./scripts/smoke.mjs",
+    "smoke:cleanup": "node ./scripts/smoke-cleanup.mjs",
+    "smoke:docker": "node ./scripts/smoke-docker.mjs",
+    "smoke:docker:cleanup": "node ./scripts/smoke-docker-cleanup.mjs",
+    "load:health": "node ./scripts/load-autocannon.mjs"
+  },
+  "devDependencies": {
+    "autocannon": "^8.0.0"
+  }
+}
