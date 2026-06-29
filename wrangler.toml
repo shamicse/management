@@ -1,0 +1,12 @@
+# This is the configuration file for your Cloudflare Worker.
+# It helps Wrangler, the command-line tool, understand how to build and deploy your code.
+
+name = "placement-management-worker" # A name for your Worker.
+main = "worker.js" # The entry point for your Worker's code.
+compatibility_date = "2024-07-25" # Specifies the version of the Workers runtime.
+
+# The following settings are added to resolve the warnings from your deployment log.
+
+# Disables the *.workers.dev subdomain for your Worker.
+# Set this to true if you want to use a workers.dev route.
+workers_dev = false
