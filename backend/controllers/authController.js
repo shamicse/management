@@ -13,10 +13,12 @@ const skipEmailVerification = env.SKIP_EMAIL_VERIFICATION === 'true';
 
 const cookieOptions = () => {
   const isProd = process.env.NODE_ENV === 'production';
+  const isHttpsApp = (process.env.APP_BASE_URL || '').startsWith('https://');
+  const useSecureCookie = isProd && isHttpsApp;
   return {
     httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? 'none' : 'lax',
+    secure: useSecureCookie,
+    sameSite: useSecureCookie ? 'none' : 'lax',
     path: '/',
   };
 };
@@ -198,9 +200,7 @@ const login = async (req, res) => {
 
     // Clear any stale refresh cookie from a previous user/role before issuing a new session
     clearRefreshCookie(res);
-    if (role !== 'admin') {
-      await issueRefreshToken({ res, userId: user._id, role, req });
-    }
+    await issueRefreshToken({ res, userId: user._id, role, req });
 
     const response = {
       _id: user._id,
