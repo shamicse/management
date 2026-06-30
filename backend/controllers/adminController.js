@@ -3,6 +3,7 @@ const Recruiter = require('../models/Recruiter');
 const Job = require('../models/Job');
 const Application = require('../models/Application');
 const Announcement = require('../models/Announcement');
+const { getMaintenanceStatus, setMaintenanceMode } = require('../utils/maintenance');
 
 const getDashboard = async (req, res) => {
   try {
@@ -20,6 +21,8 @@ const getDashboard = async (req, res) => {
       { $group: { _id: '$status', count: { $sum: 1 } } },
     ]);
 
+    const maintenance = await getMaintenanceStatus();
+
     res.json({
       totalStudents,
       totalRecruiters,
@@ -28,7 +31,28 @@ const getDashboard = async (req, res) => {
       totalJobs,
       totalApplications,
       statusBreakdown,
+      maintenance,
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getMaintenance = async (req, res) => {
+  try {
+    res.json(await getMaintenanceStatus());
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateMaintenance = async (req, res) => {
+  try {
+    const status = await setMaintenanceMode({
+      enabled: Boolean(req.body.enabled),
+      adminId: req.user._id,
+    });
+    res.json(status);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -244,6 +268,8 @@ const getBranchWiseReport = async (req, res) => {
 
 module.exports = {
   getDashboard,
+  getMaintenance,
+  updateMaintenance,
   getStudents,
   toggleStudentStatus,
   getRecruiters,

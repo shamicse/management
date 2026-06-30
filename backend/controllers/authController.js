@@ -7,6 +7,7 @@ const env = require('../config/env');
 const { generateToken, generateRefreshToken } = require('../middleware/auth');
 const { createRandomToken, hashToken } = require('../utils/tokens');
 const { sendEmail } = require('../utils/email');
+const { getMaintenanceStatus } = require('../utils/maintenance');
 
 const skipEmailVerification = env.SKIP_EMAIL_VERIFICATION === 'true';
 
@@ -167,6 +168,11 @@ const login = async (req, res) => {
       user = await Admin.findOne({ username: email });
     } else {
       return res.status(400).json({ message: 'Invalid role' });
+    }
+
+    const maintenance = await getMaintenanceStatus();
+    if (maintenance.enabled && role !== 'admin') {
+      return res.status(503).json({ message: maintenance.message, maintenance });
     }
 
     if (!user || !(await user.matchPassword(password))) {

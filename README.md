@@ -93,6 +93,25 @@ In `backend/.env`, configure (at minimum):
 - `CORS_ORIGINS` (default `http://localhost:3000`)
 - `APP_BASE_URL` (default `http://localhost:3000`)
 
+In `frontend/.env`, configure:
+- `VITE_API_BASE_URL` (default `/api`)
+
+For local development, `/api` works because Vite proxies requests to `http://localhost:5000`.
+For a Cloudflare Pages/Wrangler frontend deployment, set `VITE_API_BASE_URL` to the full deployed backend API URL, for example:
+
+```env
+VITE_API_BASE_URL=https://your-backend.example.com/api
+```
+
+Cloudflare Pages only deploys the React frontend from this repo. The Express/Mongo backend must also be deployed to a Node.js host, and that backend must include the Pages URL in `CORS_ORIGINS`:
+
+```env
+CORS_ORIGINS=https://your-pages-site.pages.dev
+APP_BASE_URL=https://your-pages-site.pages.dev
+```
+
+If production uses a new MongoDB database, run `npm run seed` against that production database once so the default admin account exists there.
+
 Optional email (if not set, emails are logged to backend console):
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`
 

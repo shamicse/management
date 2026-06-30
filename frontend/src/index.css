@@ -134,6 +134,11 @@ a {
   color: white;
 }
 
+.btn-warning {
+  background: var(--warning);
+  color: #111827;
+}
+
 .btn-outline {
   background: transparent;
   border: 1.5px solid var(--border);
@@ -506,6 +511,72 @@ tr:hover td {
   background: #dbeafe;
   color: #1d4ed8;
   border: 1px solid #bfdbfe;
+}
+
+.maintenance-admin-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--warning);
+}
+
+.maintenance-admin-card.is-active {
+  border-left-color: var(--danger);
+  background: #fff7ed;
+}
+
+.maintenance-admin-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.maintenance-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #0f172a 0%, #164e63 55%, #2563eb 100%);
+}
+
+.maintenance-panel {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2.25rem;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.maintenance-kicker {
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.maintenance-panel h1 {
+  font-size: 2rem;
+  line-height: 1.15;
+  margin-bottom: 0.8rem;
+}
+
+.maintenance-panel p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.maintenance-expiry {
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 /* Landing */

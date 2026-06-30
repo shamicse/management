@@ -1,9 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useAuth } from './context/AuthContext';
+import api from './services/api';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Maintenance from './pages/Maintenance';
 import Notifications from './pages/Notifications';
 
 import StudentDashboard from './pages/student/StudentDashboard';
@@ -26,6 +30,39 @@ import AdminReports from './pages/admin/AdminReports';
 import AdminAnnouncements from './pages/admin/AdminAnnouncements';
 
 function App() {
+  const { user } = useAuth();
+  const [maintenance, setMaintenance] = useState({ enabled: false });
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadMaintenance = async () => {
+      try {
+        const { data } = await api.get('/admin/maintenance/status');
+        if (isMounted) setMaintenance(data);
+      } catch {
+        if (isMounted) setMaintenance({ enabled: false });
+      }
+    };
+
+    loadMaintenance();
+    const timer = window.setInterval(loadMaintenance, 30000);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  if (maintenance.enabled && user?.role !== 'admin') {
+    return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Maintenance status={maintenance} />} />
+      </Routes>
+    );
+  }
+
   return (
     <Routes>
       <Route path="/" element={<Landing />} />

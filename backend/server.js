@@ -17,6 +17,7 @@ const env = require('./config/env');
 const { isOriginAllowed } = require('./config/cors');
 const logger = require('./utils/logger');
 const { register, httpRequestDuration, httpRequestsTotal } = require('./utils/metrics');
+const { maintenanceGate } = require('./utils/maintenance');
 
 const authRoutes = require('./routes/authRoutes');
 const studentRoutes = require('./routes/studentRoutes');
@@ -92,6 +93,8 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
 });
 app.use('/api/auth', authLimiter);
+
+app.use(maintenanceGate);
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
