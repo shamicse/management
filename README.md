@@ -97,10 +97,10 @@ In `frontend/.env`, configure:
 - `VITE_API_BASE_URL` (default `/api`)
 
 For local development, `/api` works because Vite proxies requests to `http://localhost:5000`.
-For a Cloudflare Pages/Wrangler frontend deployment, set `VITE_API_BASE_URL` to the full deployed backend API URL, for example:
+For a Cloudflare Pages/Wrangler frontend deployment, keep `VITE_API_BASE_URL=/api` and set the Pages environment variable `BACKEND_ORIGIN` to the deployed backend origin, for example:
 
 ```env
-VITE_API_BASE_URL=https://your-backend.example.com/api
+BACKEND_ORIGIN=https://your-backend.example.com
 ```
 
 Cloudflare Pages only deploys the React frontend from this repo. The Express/Mongo backend must also be deployed to a Node.js host, and that backend must include the Pages URL in `CORS_ORIGINS`:
